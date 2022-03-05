@@ -27,6 +27,7 @@ function App() {
   useEffect(() => {
     console.log("I run when 'counter' & 'keyword'");
   }, [keyword, counter]);
+  
   return (
     <div>
       <input 
