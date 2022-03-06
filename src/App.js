@@ -1,42 +1,37 @@
-import { useState, useEffect } from "react";
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+} from "react-router-dom";
+import Detail from "./routes/Detail";
+import Home from "./routes/Home";
 
 /**
- * Coin Tracker 
  * 
- *  - https://api.coinpaprika.com/v1/tickers
+ * Movie API : https://yts.mx/api/v2/list_movies.json?minimum_rating=8.8&sort_by=year
+ * 
+ * - react-router-dom 을 통한 페이지 전환.
+ *  : https://v5.reactrouter.com/web/guides/quick-start
+ * => npm i react-router-dom@5.3.0 (6V 부터 달라짐.)
+ * 
  * @returns 
  */
+
 function App() {
-  const [loading, setLoading] = useState(true);
-  const [coins, setCoins] = useState([]);
-  useEffect(() => {
-    fetch("https://api.coinpaprika.com/v1/tickers")
-      .then((response) => response.json())
-      .then((json) => {
-        console.log(json);
-        setCoins(json);
-        setLoading(false);
-      });
-  }, []);
-  return (
-    <div>
-      <h1>The Coins {!loading ? `(${coins.length})` : null}</h1>
-      {
-        loading 
-        ? 
-        <strong>Loading...</strong> 
-        : 
-        <select>
-          {coins.map((item, idx) => (
-            <option>
-              {item.name} ({item.symbol}) : {item.quotes.USD.price} 
-            </option>
-          ))}
-        </select>
-      }
-      
-    </div>
-  );
+    return (
+        <Router>
+            <Switch>
+                <Route path="/movie/:id">
+                    <Detail/>
+                </Route>
+                <Route path="/">
+                    <Home />
+                </Route> 
+            </Switch>
+        </Router>
+    );
+    
 }
 
 export default App;
